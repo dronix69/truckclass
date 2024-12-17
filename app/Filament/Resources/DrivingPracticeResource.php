@@ -48,6 +48,9 @@ class DrivingPracticeResource extends Resource
                     }),
                 Forms\Components\Select::make('instructor_id')
                     ->relationship('instructor', 'name')
+                    ->options(function () {    // Función para obtener los instructores disponibles
+                        return DrivingPractice::getAvailableInstructors()->pluck('name', 'id');
+                    })
                     ->required()
                     ->preload()
                     ->searchable(),

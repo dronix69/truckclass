@@ -39,5 +39,24 @@ class DrivingPractice extends Model
         return $this->belongsTo(Student::class);
     }
 
+    // Función para obtener los instructores disponibles
+    public static function getAvailableInstructors()
+    {
+        $instructors = Instructor::all();
+        $availableInstructors = [];
+
+        foreach ($instructors as $instructor) {
+            $practiceCount = self::where('instructor_id', $instructor->id)
+                ->whereDate('start_time', now()->toDateString())
+                ->count();
+
+            if ($practiceCount < 8) {
+                $availableInstructors[] = $instructor;
+            }
+        }
+
+        return collect($availableInstructors);
+    }
+
     
 }

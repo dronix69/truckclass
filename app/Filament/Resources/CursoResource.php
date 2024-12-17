@@ -131,7 +131,7 @@ class CursoResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //RelationManagers\MatriculaRelationManager::class,
+            RelationManagers\MatriculaRelationManager::class,
         ];
     }
 

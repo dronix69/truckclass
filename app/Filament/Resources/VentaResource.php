@@ -25,6 +25,8 @@ use Filament\Forms\Set;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Actions\ExportAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Tables\Actions\Action;
 
 
 
@@ -222,6 +224,18 @@ class VentaResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+
+                // Boton para imprimir contrato del alumno
+                Action::make('imprimir_venta')
+                    ->label('Imprimir Venta')
+                    ->icon('heroicon-o-printer')
+                    ->action(function (Venta $record) {
+                        $pdf = Pdf::loadView('ventas.venta', ['venta' => $record]);
+                        return response()->streamDownload(function () use ($pdf) {
+                            echo $pdf->output();
+                        }, 'venta_' . $record->rut . '.pdf');
+                    })
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

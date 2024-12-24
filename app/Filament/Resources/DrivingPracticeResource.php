@@ -30,6 +30,8 @@ class DrivingPracticeResource extends Resource
 
     protected static ?string $navigationGroup = 'REGISTRO PRACTICAS';
 
+    protected static ?int $navigationSort = 4;
+
 
     public static function form(Form $form): Form
     {

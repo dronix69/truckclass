@@ -123,10 +123,10 @@
 
 <body>
     <div class="header">
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+        <img src="{{ asset('images/logo-full.png') }}" alt="Logo" class="logo">
         <div class="header-text">
-            <h1>Registro de prácticas SIT</h1>
-            <p>Escuela de Conducción Cerca</p>
+            <h1>Registro de prácticas de conducir</h1>
+            <p>Escuela de Conducción PRUEBA</p>
         </div>
     </div>
 

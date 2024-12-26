@@ -5,10 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+
 
 class Certificado extends Model
 {
     use HasFactory;
+    use LogsActivity;
 
     protected $fillable = [
         'nombre',
@@ -50,5 +54,11 @@ class Certificado extends Model
      {
          return Carbon::parse($this->fecha_otorgado)->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
      }
+
+     public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['name', 'apellido', 'rut', 'codigo_curso', 'curso']);
+    }
 }
 

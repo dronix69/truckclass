@@ -225,7 +225,7 @@ class VentaResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
 
-                // Boton para imprimir contrato del alumno
+                // Boton para imprimir Boleta de venta - este codigo sirve para imprimir un solo contrato
                 Action::make('imprimir_venta')
                     ->label('Imprimir Venta')
                     ->icon('heroicon-o-printer')

@@ -6,6 +6,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\UppercaseAttributes;  //Comvierte muniscula a mayuscula
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+
+use App\Mail\MatriculaCreated;
+use Illuminate\Support\Facades\Mail;
 
 class Matricula extends Model
 {
@@ -22,6 +27,7 @@ class Matricula extends Model
 
 
     use HasFactory;
+    use LogsActivity;
 
     protected $fillable = [
         'nombre',
@@ -81,4 +87,22 @@ class Matricula extends Model
  
          return $prefix . str_pad($newNumber, 2, '0', STR_PAD_LEFT);
      }
+
+     // Esto permite que se creen registros en la tabla de actividad
+     public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['nombre', 'apellido', 'rut', 'correo', 'telefono', 'edad', 'fecha_matricula', 'fecha_nacimiento', 'direccion', 'comuna']);
+    }
+
+    // Esto crea un correo al crear una matricula
+    protected static function booted()
+{
+    static::created(function ($matricula) {
+        // Enviar correo al alumno
+        Mail::to($matricula->correo)
+            ->cc('soporte@startel.cl') // Reemplaza con el correo del administrador
+            ->send(new MatriculaCreated($matricula));
+    });
+}
 }

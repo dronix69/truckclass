@@ -32,6 +32,11 @@ class DrivingPracticeResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
 
     public static function form(Form $form): Form
     {
